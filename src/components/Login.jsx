@@ -25,52 +25,55 @@ const Login = () => {
   };
 
   return (
-    <section className="hero is-fullheight is-fullwidth">
-      <div className="hero-body">
-        <div className="container">
-          <div className="columns is-centered">
-            <div className="column is-4">
-              <form onSubmit={Auth} className="box">
-                {isError && <p className="has-text-centered">{message}</p>}
-                <h1 className="title is-2">Sign In</h1>
-                <div className="field">
-                  <label className="label">Email</label>
-                  <div className="control">
-                    <input
-                      type="text"
-                      className="input"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Email"
-                    />
+    <>
+      <section className="flex items-center justify-center h-screen bg-gray-100">
+        <div className="w-full max-w-md p-6 space-y-4 bg-white rounded">
+          <div className="container">
+            <div className="columns is-centered">
+              <div className="column is-4">
+                <form onSubmit={Auth} className="box">
+                  {isError && (
+                    <p className="font-semibold text-center text-red-500">
+                      {message}
+                    </p>
+                  )}
+                  <h1 className="text-3xl font-bold text-center">Masuk</h1>
+                  <div className="field">
+                    <label className="label">Email</label>
+                    <div className="control">
+                      <input
+                        type="text"
+                        className="w-full input input-bordered"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Email"
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="field">
-                  <label className="label">Password</label>
-                  <div className="control">
-                    <input
-                      type="password"
-                      className="input"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="******"
-                    />
+                  <div className="field">
+                    <label className="label">Kata Sandi</label>
+                    <div className="control">
+                      <input
+                        type="password"
+                        className="w-full input input-bordered"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="******"
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="field mt-5">
-                  <button
-                    type="submit"
-                    className="button is-success is-fullwidth"
-                  >
-                    {isLoading ? "Loading..." : "Login"}
-                  </button>
-                </div>
-              </form>
+                  <div className="mt-5 field">
+                    <button type="submit" className="w-full btn btn-primary">
+                      {isLoading ? "Memuat..." : "Login"}
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

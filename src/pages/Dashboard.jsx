@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import Layout from "./Layout";
-import Welcome from "../components/Welcome";
+import DashboardAdmin from "./admin/DashboardAdmin";
+import DashboardDivision from "./division/DashboardDivision";
+import DashboardTHL from "./thl/DashboardTHL";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getMe } from "../features/authSlice";
@@ -8,7 +10,7 @@ import { getMe } from "../features/authSlice";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isError } = useSelector((state) => state.auth);
+  const { isError, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getMe());
@@ -22,7 +24,9 @@ const Dashboard = () => {
 
   return (
     <Layout>
-      <Welcome />
+      {user && user.role === "admin" ? <DashboardAdmin /> : null}
+      {user && user.role === "thl" ? <DashboardTHL /> : null}
+      {user && user.role === "division" ? <DashboardDivision /> : null}
     </Layout>
   );
 };
