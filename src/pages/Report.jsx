@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import ModalUpdateStatus from "../components/modal/ModalUpdateStatus";
 import { STATUS } from "../utils/helper";
+import { parseAndFormatDateString } from "../utils/helper";
 
 const Report = () => {
   const dispatch = useDispatch();
@@ -17,33 +18,6 @@ const Report = () => {
   useEffect(() => {
     dispatch(getMe());
   }, [dispatch]);
-
-  const data = [
-    {
-      id: 1,
-      tanggal: "2023-01-01",
-      kegiatan: "Rapat",
-      waktuMulai: "10:00",
-      waktuBerakhir: "11:30",
-      lamaPengerjaan: "1,5 jam",
-    },
-    {
-      id: 2,
-      tanggal: "2023-01-02",
-      kegiatan: "Koding",
-      waktuMulai: "09:00",
-      waktuBerakhir: "17:00",
-      lamaPengerjaan: "8 jam",
-    },
-    {
-      id: 3,
-      tanggal: "2023-01-03",
-      kegiatan: "Testing",
-      waktuMulai: "14:00",
-      waktuBerakhir: "16:00",
-      lamaPengerjaan: "2 jam",
-    },
-  ];
 
   const fetchReports = async () => {
     try {
@@ -93,6 +67,7 @@ const Report = () => {
             <tr>
               <th></th>
               <th>Tanggal</th>
+              <th>Nama</th>
               <th>Kegiatan</th>
               <th>Waktu Mulai</th>
               <th>Waktu Berakhir</th>
@@ -104,11 +79,12 @@ const Report = () => {
             {reports.map((item) => (
               <tr key={item.id}>
                 <th></th>
-                <td>{item.createdAt}</td>
+                <td>{parseAndFormatDateString(item.createdAt)}</td>
+                <td>{item.user?.name}</td>
                 <td>{item.title}</td>
                 <td>{item.startTime}</td>
                 <td>{item.endTime}</td>
-                <td>{item.duration}</td>
+                <td>{item.duration} Jam</td>
                 <td className="flex space-x-4">
                   {user && user.role === "division" && (
                     <button
@@ -121,7 +97,9 @@ const Report = () => {
                       Terima
                     </button>
                   )}
-                  <button className="btn">Detail</button>
+                  <Link to={`/report/detail/${item.uuid}`} className="btn">
+                    Detail
+                  </Link>
                   {user && user.role === "division" && (
                     <button
                       onClick={() => {

@@ -3,6 +3,7 @@ import Layout from "../Layout";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ToastError from "../../components/toast/ToastError";
 
 const AddReport = () => {
   const { user } = useSelector((state) => state.auth);
@@ -15,6 +16,8 @@ const AddReport = () => {
   const [duration, setDuration] = useState("");
   const [image, setImage] = useState(null);
   const [customError, setCustomError] = useState(null);
+  const [message, setMessage] = useState("");
+  const [fileName, setFileName] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value, type } = e.target;
@@ -40,6 +43,10 @@ const AddReport = () => {
   const loadImage = (e) => {
     const image = e.target.files[0];
     setImage(image);
+    if (image) {
+      setFileName(image.name);
+      // Tambahkan logika atau fungsi lain yang diperlukan untuk pemrosesan file
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -81,12 +88,16 @@ const AddReport = () => {
 
       navigate("/reports");
     } catch (error) {
-      console.error("Error submitting the form:", error);
+      setMessage(error.response.data.msg);
+      setTimeout(() => {
+        setMessage("");
+      }, 1500);
     }
   };
 
   return (
     <Layout>
+      {message && <ToastError title={message} />}
       <div>
         <h2 className="text-xl font-bold">Tambah Laporan</h2>
         <div className="mt-4">
@@ -164,8 +175,11 @@ const AddReport = () => {
                     Bukti Kegiatan
                   </h2>
                   <p className="mt-2 tracking-wide text-gray-500">
-                    Upload or drag &amp; drop your file (SVG, PNG, JPG, or GIF).
+                    {fileName
+                      ? `File: ${fileName}`
+                      : "Upload or drag & drop your file (SVG, PNG, JPG, or GIF)."}
                   </p>
+
                   <input
                     id="dropzone-file"
                     type="file"

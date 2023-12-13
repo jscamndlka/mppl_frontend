@@ -9,6 +9,7 @@ import AddReport from "./pages/thl/AddReport";
 import ReportReject from "./pages/ReportReject";
 import ReportAccept from "./pages/ReportAccept";
 import DetailReport from "./pages/DetailReport";
+import AddTHL from "./pages/admin/AddTHL";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/data/thl" element={<DataTHL />} />
+          <Route path="/thl/add" element={<AddTHL />} />
           <Route path="/reports" element={<Report />} />
           <Route path="/report/add" element={<AddReport />} />
           <Route path="/reports/reject" element={<ReportReject />} />
